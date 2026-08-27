@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>快手券和福利页 C 端测试报告 - 2026-08-27</title>
+  <style>
+    :root { color-scheme: light; --red:#ff3347; --ink:#20232a; --muted:#687386; --line:#e8ebf0; --bg:#f5f7fa; --pass:#168a52; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif; }
+    main { width:min(1120px,calc(100% - 32px)); margin:32px auto 72px; }
+    header,.card { background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:0 6px 24px rgba(27,35,50,.05); }
+    header { padding:32px; border-top:5px solid var(--red); }
+    h1 { margin:0 0 8px; font-size:28px; }
+    h2 { margin:0 0 18px; font-size:20px; }
+    h3 { margin:0 0 8px; font-size:16px; }
+    p { margin:6px 0; }
+    code { background:#f1f3f6; padding:2px 6px; border-radius:5px; word-break:break-all; }
+    .summary { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:24px; }
+    .metric { padding:16px; background:#f8fafc; border-radius:12px; }
+    .metric b { display:block; font-size:24px; }
+    .pass { color:var(--pass); font-weight:700; }
+    .card { margin-top:18px; padding:24px; }
+    table { width:100%; border-collapse:collapse; }
+    th,td { padding:12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:#f8fafc; white-space:nowrap; }
+    .case { border:1px solid var(--line); border-radius:12px; padding:18px; margin-top:14px; }
+    .case-head { display:flex; gap:12px; justify-content:space-between; align-items:center; }
+    .tag { padding:4px 10px; border-radius:999px; background:#e9f8f0; color:var(--pass); font-weight:700; }
+    .evidence { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:14px; }
+    figure { margin:0; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:#fafafa; }
+    img { width:100%; max-height:560px; object-fit:contain; display:block; background:#eef1f5; }
+    figcaption { padding:9px 11px; color:var(--muted); }
+    ul { margin:8px 0 0; padding-left:20px; }
+    .note { border-left:4px solid #f0a020; padding-left:12px; color:#5b4a28; }
+    footer { margin-top:20px; color:var(--muted); text-align:center; }
+    @media(max-width:760px){ .summary{grid-template-columns:repeat(2,1fr)} header,.card{padding:18px} th:nth-child(2),td:nth-child(2){display:none} }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>快手券和福利页 C 端测试报告</h1>
+    <p>执行日期：2026-08-27 ｜ 执行方式：本地 Android 实机 + 页面状态取证</p>
+    <p>测试入口：<code>kwai://krn?bundleId=KwaishopMarketingCouponBenefitsApp&amp;componentName=CouponList&amp;themeStyle=1</code></p>
+    <div class="summary">
+      <div class="metric"><span>总体结论</span><b class="pass">PASS</b></div>
+      <div class="metric"><span>用例总数</span><b>4</b></div>
+      <div class="metric"><span>通过</span><b>4</b></div>
+      <div class="metric"><span>失败/阻塞</span><b>0 / 0</b></div>
+    </div>
+  </header>
+
+  <section class="card">
+    <h2>执行环境</h2>
+    <table>
+      <tr><th>应用</th><td>快手主站（com.smile.gifmaker）</td><th>设备</th><td>DCO_AL00 / GBJ0223111002495</td></tr>
+      <tr><th>页面容器</th><td>KwaiRnActivity</td><th>KRN</th><td>KwaishopMarketingCouponBenefitsApp / CouponList</td></tr>
+      <tr><th>验证范围</th><td colspan="3">券和福利页楼层交互、券使用入口跳转与返回、券分类 Tab、红包与其他菜单</td></tr>
+      <tr><th>安全边界</th><td colspan="3">未领券、未加购、未提交订单、未结算、未支付</td></tr>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>测试结果</h2>
+
+    <article class="case">
+      <div class="case-head"><h3>Case 1：818宠粉节消费券楼层收起/展开</h3><span class="tag">PASS</span></div>
+      <ul>
+        <li>初始展开状态右上角显示“收起”，券卡完整展示。</li>
+        <li>点击“收起”后楼层折叠，按钮切换为“展开”。</li>
+        <li>点击“展开”后券卡恢复，按钮切换回“收起”。</li>
+        <li>最终复核通过，页面停留在展开状态。</li>
+      </ul>
+      <p>过程证据：<a href="evidence/case1_task.log">Case 1 自动化执行日志</a></p>
+      <div class="evidence">
+        <figure><img src="evidence/case2_return_and_final.png" alt="818消费券楼层最终展开状态"><figcaption>最终展开状态：可见“收起”和多张“去使用”</figcaption></figure>
+      </div>
+    </article>
+
+    <article class="case">
+      <div class="case-head"><h3>Case 2：任意消费券“去使用”跳转并返回</h3><span class="tag">PASS</span></div>
+      <ul>
+        <li>准确点击 40 元平台消费券的“去使用”。</li>
+        <li>成功进入“凑单专区”，展示平台消费券、商品分类和商品列表。</li>
+        <li>系统返回后重新进入券和福利页，818 楼层仍正常展示。</li>
+      </ul>
+      <div class="evidence">
+        <figure><img src="evidence/case2_landing.png" alt="凑单专区落地页"><figcaption>“去使用”落地页：凑单专区</figcaption></figure>
+        <figure><img src="evidence/case2_return_and_final.png" alt="返回券和福利页"><figcaption>返回成功：优惠券页与 818 楼层可见</figcaption></figure>
+      </div>
+    </article>
+
+    <article class="case">
+      <div class="case-head"><h3>Case 3：优惠券分类 Tab</h3><span class="tag">PASS</span></div>
+      <table>
+        <thead><tr><th>Tab</th><th>实际结果</th><th>结论</th></tr></thead>
+        <tbody>
+          <tr><td>全部</td><td>选中态正常，展示 818 消费券楼层及多类型券列表。</td><td class="pass">通过</td></tr>
+          <tr><td>平台券</td><td>选中态正常，刷新为平台券列表。</td><td class="pass">通过</td></tr>
+          <tr><td>店铺券</td><td>选中态正常，刷新为按店铺分组的券列表。</td><td class="pass">通过</td></tr>
+          <tr><td>主播券</td><td>选中态正常，展示“暂无可用优惠券”标准空状态及推荐内容。</td><td class="pass">通过</td></tr>
+          <tr><td>商品券</td><td>选中态正常，刷新为指定商品可用券列表。</td><td class="pass">通过</td></tr>
+        </tbody>
+      </table>
+      <div class="evidence">
+        <figure><img src="evidence/case3_all.png" alt="全部"><figcaption>全部</figcaption></figure>
+        <figure><img src="evidence/case3_platform.png" alt="平台券"><figcaption>平台券</figcaption></figure>
+        <figure><img src="evidence/case3_store.png" alt="店铺券"><figcaption>店铺券</figcaption></figure>
+        <figure><img src="evidence/case3_host.png" alt="主播券"><figcaption>主播券：标准空状态</figcaption></figure>
+        <figure><img src="evidence/case3_product.png" alt="商品券"><figcaption>商品券</figcaption></figure>
+      </div>
+    </article>
+
+    <article class="case">
+      <div class="case-head"><h3>Case 4：宠爱红包、其他 Tab</h3><span class="tag">PASS</span></div>
+      <ul>
+        <li>宠爱红包：选中态正常，显示“生效中 / 用完失效”和“暂无红包记录”标准空状态。</li>
+        <li>其他：菜单正常展开，显示“宠粉金、购物金”两个入口，遮罩和箭头状态正常。</li>
+      </ul>
+      <div class="evidence">
+        <figure><img src="evidence/case4_pet_red.png" alt="宠爱红包"><figcaption>宠爱红包：标准空状态</figcaption></figure>
+        <figure><img src="evidence/case4_other.png" alt="其他菜单"><figcaption>其他：宠粉金、购物金菜单</figcaption></figure>
+      </div>
+    </article>
+  </section>
+
+  <section class="card">
+    <h2>执行说明与纠偏</h2>
+    <ul>
+      <li>旧入口 <code>KwaishopMarketingLuckybagApp/Index</code> 不能稳定提供消费券楼层，已停止作为默认入口。</li>
+      <li>当前入口由实机运行参数和可见 818 消费券楼层共同确认，并已覆盖本地工作流。</li>
+      <li>Case 2 首次视觉定位偏离后已立即中止，精准复跑命中“去使用”；偏离过程不计入用例结果。</li>
+      <li>横向 Tab 探索曾触发系统侧滑返回，已通过新 deeplink 恢复；未产生任何业务数据变更。</li>
+    </ul>
+    <p class="note">本报告仅覆盖本机当前账号和当前页面版本的功能/UI 验证，不覆盖接口正确性、埋点、性能、多机型兼容性及交易链路。</p>
+  </section>
+
+  <section class="card">
+    <h2>最终结论</h2>
+    <p><strong>Case 1–4 全部通过。</strong> 券楼层交互、去使用跳转/返回、五个券分类 Tab、宠爱红包和其他菜单均能正常响应；主播券与宠爱红包无数据时展示了完整的标准空状态，未发现白屏、卡死、错误提示或状态错乱。</p>
+    <p>任务结束时页面已恢复到“优惠券 - 全部”，818宠粉节消费券楼层保持展开。</p>
+  </section>
+
+  <footer>报告生成时间：2026-08-27（Asia/Shanghai）</footer>
+</main>
+</body>
+</html>
