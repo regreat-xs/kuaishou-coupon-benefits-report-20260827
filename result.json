@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "phase": "post_quote",
+  "summary": "券和福利页 Case 1-4 全部通过，未发现页面功能异常",
+  "observedSignals": [
+    "818宠粉节消费券楼层可正常收起并重新展开",
+    "消费券去使用可进入凑单专区并正常返回",
+    "全部、平台券、店铺券、主播券、商品券 Tab 均正常",
+    "宠爱红包页面及其他下拉菜单均正常"
+  ],
+  "reportPath": "/Users/xiaocaipu/Documents/New project/reports/coupon_benefits_20260827/report.html",
+  "docsUrl": "",
+  "screenshots": [
+    "evidence/case2_landing.png",
+    "evidence/case2_return_and_final.png",
+    "evidence/case3_all.png",
+    "evidence/case3_platform.png",
+    "evidence/case3_store.png",
+    "evidence/case3_host.png",
+    "evidence/case3_product.png",
+    "evidence/case4_pet_red.png",
+    "evidence/case4_other.png"
+  ],
+  "coveredCaseIds": ["CASE-1", "CASE-2", "CASE-3", "CASE-4"]
+}
